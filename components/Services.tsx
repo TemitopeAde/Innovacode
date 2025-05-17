@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { FaCode, FaMobileAlt, FaWordpress, FaWix, FaServer } from 'react-icons/fa'
 import { SiSquarespace } from 'react-icons/si'
 
-// Register ScrollTrigger plugin
+// Register ScrollTrigger pluginöte
 gsap.registerPlugin(ScrollTrigger)
 
 const services = [
@@ -143,7 +143,7 @@ export default function Services() {
             Ready to transform your digital presence?
           </h3>
           <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
-            Let's discuss how our services can help your business grow and succeed online.
+            Let us discuss how our services can help your business grow and succeed online.
           </p>
           <button className="bg-white text-indigo-600 hover:bg-opacity-90 px-8 py-4 rounded-lg font-medium transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
             Get a Free Consultation

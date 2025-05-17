@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import Image from 'next/image'
 
 const testimonials = [
   {
@@ -64,7 +65,8 @@ export default function Testimonials() {
             >
               <div className="flex items-center mb-6">
                 <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
-                  <img 
+                  <Image
+                    layout="fill" 
                     src={testimonial.avatar} 
                     alt={testimonial.name}
                     className="w-full h-full object-cover"
@@ -75,7 +77,7 @@ export default function Testimonials() {
                   <p className="text-gray-600 text-sm">{testimonial.company}</p>
                 </div>
               </div>
-              <p className="text-gray-700 italic">"{testimonial.quote}"</p>
+              <p className="text-gray-700 italic">&ldquo;{testimonial.quote}&rdquo;</p>
             </div>
           ))}
         </div>
