@@ -4,26 +4,26 @@ import { useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
-import Image from 'next/image'
+
 
 const testimonials = [
   {
     name: 'Sarah Johnson',
     company: 'TechSolutions Inc.',
     quote: 'Innovacode transformed our outdated website into a modern, high-performing platform that has significantly increased our lead generation.',
-    avatar: '/images/avatar1.jpg'
+    
   },
   {
     name: 'Michael Chen',
     company: 'StartUp Ventures',
     quote: 'The mobile app they developed for us exceeded all expectations. Their attention to detail and user experience focus was impressive.',
-    avatar: '/images/avatar2.jpg'
+    
   },
   {
     name: 'Emily Rodriguez',
     company: 'Creative Agency',
     quote: 'Working with Innovacode on our WordPress site was seamless. They delivered on time and within budget while adding creative touches we hadn\'t considered.',
-    avatar: '/images/avatar3.jpg'
+    
   }
 ]
 
@@ -64,14 +64,7 @@ export default function Testimonials() {
               className="testimonial-card bg-gray-50 rounded-xl p-8 hover:shadow-lg transition-all duration-300"
             >
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
-                  <Image
-                    layout="fill" 
-                    src={testimonial.avatar} 
-                    alt={testimonial.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                
                 <div>
                   <h4 className="font-semibold">{testimonial.name}</h4>
                   <p className="text-gray-600 text-sm">{testimonial.company}</p>

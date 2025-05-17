@@ -1,75 +1,105 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import Image from "next/image";
+import { motion, useInView } from "framer-motion";
 
-const projects = [
+// Define Project type
+interface Project {
+  title: string;
+  category: string;
+  description: string;
+  link: string;
+}
+
+// Example project data
+const projects: Project[] = [
   {
-    title: "E-commerce Platform",
-    category: "Web Development",
-    image: "/images/project1.jpg"
+    title: "African Rhapsody",
+    category: "Multicurrency E-commerce",
+    description: "Multicurrency e-commerce platform",
+    link: "https://raphsodies.vercel.app"
   },
   {
-    title: "Fitness Mobile App",
-    category: "Mobile App",
-    image: "/images/project2.jpg"
-  },
-  {
-    title: "Corporate Website",
-    category: "WordPress",
-    image: "/images/project3.jpg"
-  },
-  {
-    title: "Restaurant Booking",
-    category: "Wix",
-    image: "/images/project4.jpg"
-  },
-  {
-    title: "Portfolio Site",
-    category: "Squarespace",
-    image: "/images/project5.jpg"
-  },
-  {
-    title: "SaaS Dashboard",
-    category: "Web App",
-    image: "/images/project6.jpg"
+    title: "StacPay Merchant",
+    category: "Payment Platform",
+    description: "Merchant payment solution",
+    link: "https://preysta-2hib.vercel.app/mr-biggs-3"
   }
 ];
 
-gsap.registerPlugin(ScrollTrigger);
+// Portfolio Item Component
+const PortfolioItem = ({
+  project,
+  index
+}: {
+  project: Project;
+  index: number;
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
 
-export default function Portfolio() {
-  const container = useRef<HTMLDivElement>(null);
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        delay: index * 0.1
+      }
+    }
+  };
 
-  useGSAP(
-    () => {
-      (gsap.utils.toArray(".portfolio-item") as HTMLElement[]).forEach(item => {
-        gsap.from(item, {
-          y: 100,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 80%",
-            toggleActions: "play none none none"
-          }
-        });
-      });
-    },
-    { scope: container }
+  return (
+    <motion.div
+      ref={ref}
+      variants={itemVariants}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      id="portfolio"
+      className="relative overflow-hidden rounded-xl shadow-lg bg-white"
+    >
+      {/* Image Placeholder */}
+      <div className="aspect-video bg-gradient-to-bl rounded-xl overflow-hidden" />
+      {/* <div>
+        <img src="/images/img-1" alt="Project Image" />
+      </div> */}
+
+      {/* Always visible content overlay */}
+      <div className="absolute inset-0 flex flex-col justify-end p-6 bg-opacity-80 text-white">
+        <div>
+          <span className="text-indigo-500 font-medium">
+            {project.category}
+          </span>
+          <h3 className="text-black text-xl font-semibold mt-1">
+            {project.title}
+          </h3>
+          <p className="text-blue-950 text-sm mt-2">
+            {project.description}
+          </p>
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center mt-3 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition-colors"
+          >
+            Visit Website
+          </a>
+        </div>
+      </div>
+    </motion.div>
   );
+};
 
+// Portfolio Section
+export default function Portfolio() {
   return (
     <section
       id="portfolio"
-      ref={container}
-      className="section-padding bg-gray-50"
+      className="section-padding bg-gray-50 py-16 md:py-24"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Heading */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Portfolio</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -78,31 +108,10 @@ export default function Portfolio() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {projects.map((project, index) =>
-            <div
-              key={index}
-              className="portfolio-item group relative overflow-hidden rounded-xl"
-            >
-              <div className="aspect-w-16 aspect-h-9 bg-gray-200 rounded-xl overflow-hidden">
-                <Image
-                  layout="fill"
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div>
-                  <span className="text-primary font-medium">
-                    {project.category}
-                  </span>
-                  <h3 className="text-white text-xl font-semibold mt-1">
-                    {project.title}
-                  </h3>
-                </div>
-              </div>
-            </div>
+            <PortfolioItem key={index} project={project} index={index} />
           )}
         </div>
       </div>
